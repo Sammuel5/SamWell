@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uniform Order Form</title>
+    <link rel="icon" href="IMAGE/ICON.png" type="image/x-icon">
+    <link rel="stylesheet" href="STYLE2.CSS">
+</head>
+<body>
+    <div class="tab-container">
+        <!-- Tab Header -->
+        <div class="tab-header">
+            <button class="tab-button active" onclick="showTab('personal-info')">Personal Information</button>
+            <button class="tab-button" onclick="showTab('uniform-order')">Uniform Order</button>
+        </div>
+
+        <!-- Personal Information Form -->
+        <div id="personal-info" class="tab-content active">
+            <h2>Personal Information</h2>
+            <p>Please fill in your details.</p>
+            <div class="user-info">
+                <label for="full-name">Full Name</label>
+                <input type="text" id="full-name" name="full-name" required>
+
+                <label for="email">Gmail</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="cellphone">Cellphone</label>
+                <input type="tel" id="cellphone" name="cellphone" required>
+
+                <label for="student-number">Student Number</label>
+                <input type="text" id="student-number" name="student-number" required>
+
+                <label for="campus">Campus</label>
+                <select id="campus" name="campus" required>
+                    <option value="">Select Campus</option>
+                    <option value="Antipolo Campus">Antipolo Campus</option>
+                </select>
+
+                <button type="button" class="next-button" onclick="showTab('uniform-order')">Next</button>
+            </div>
+        </div>
+
+        <!-- Uniform Order Form -->
+        <div id="uniform-order" class="tab-content">
+            <h2>Uniform Order</h2>
+            <p>Select the uniforms you want to order.</p>
+
+            <div class="Uniform-item">
+                <img src="IMAGE/NSTP.webp" alt="NSTP Uniform">
+                <div class="Uniform-info">
+                    <h3>NSTP</h3>
+                    <p>₱350.00</p>
+                    <input type="number" class="quantity-input" id="NSTPQty" min="0" value="0" onchange="updateTotalAmount()">
+                    <select class="dropdown" id="NSTPSize">
+                        <option value="">Size</option>
+                        <option value="S">Small</option>
+                        <option value="M">Medium</option>
+                        <option value="L">Large</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="Uniform-item">
+                <img src="IMAGE/PE TSHIRT.webp" alt="Uniform PE">
+                <div class="Uniform-info">
+                    <h3>Uniform PE</h3>
+                    <p>₱150.00</p>
+                    <input type="number" class="quantity-input" id="UNIFORMPEQty" min="0" value="0" onchange="updateTotalAmount()">
+                    <select class="dropdown" id="UNIFORMPESize">
+                        <option value="">Size</option>
+                        <option value="S">Small</option>
+                        <option value="M">Medium</option>
+                        <option value="L">Large</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="Uniform-item">
+                <img src="IMAGE/PE PANTS.webp" alt="Jogger Pants">
+                <div class="Uniform-info">
+                    <h3>Jogger Pants</h3>
+                    <p>₱300.00</p>
+                    <input type="number" class="quantity-input" id="JoggerpantsQty" min="0" value="0" onchange="updateTotalAmount()">
+                    <select class="dropdown" id="JoggerpantsSize">
+                        <option value="">Size</option>
+                        <option value="S">Small</option>
+                        <option value="M">Medium</option>
+                        <option value="L">Large</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="order-total">
+                <h3>Total Amount: ₱<span id="totalAmount">0.00</span></h3>
+            </div>
+
+            <div class="button-container">
+                <button type="button" class="back-button" onclick="showTab('personal-info')">Back</button>
+                <button id="submitOrder">Submit Order</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Complete Your Payment</h2>
+            <div class="payment-details">
+                <h3>GCash Payment</h3>
+                <img src="IMAGE/qrcode.jfif" alt="GCash QR Code" class="payment-qr">
+                <p>Total Amount: ₱<span id="modalTotalAmount">0.00</span></p>
+                <p class="reference-number">Reference #: <span id="referenceNumber"></span></p>
+            </div>
+            
+            <div class="payment-instructions">
+                <h4>How to Pay:</h4>
+                <ol>
+                    <li>Open your GCash app</li>
+                    <li>Scan the QR code above or send payment to [GCash number]</li>
+                    <li>Enter the exact amount</li>
+                    <li>Use the Reference Number as payment description</li>
+                    <li>Complete the payment</li>
+                    <li>Click "I've Completed Payment" button below</li>
+                </ol>
+            </div>
+            
+            <div class="order-summary">
+                <h3>Order Summary</h3>
+                <div id="orderSummaryContent"></div>
+            </div>
+            
+            <button class="btn-confirm-payment" id="confirmPayment">I've Completed Payment</button>
+        </div>
+    </div>
+<script type="module" src="Script.js"></script>
+</body>
+</html>

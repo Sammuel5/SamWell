@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="IMAGE/ICON.PNG" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Ito pre mahalaga toh ito yung nag create ng excel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <title>Download</title>
+</head>
+<body>
+    <!-- ito yung download button make sure na same yung id sa gagawin mong button -->
+    <button id="downloadBtn">Download</button>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getDatabase, ref, child, get } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyChwf1uvm4YwSTElg9J6CQ21b6xivES890",
+            authDomain: "icct-antipolocampus.firebaseapp.com",
+            projectId: "icct-antipolocampus",
+            storageBucket: "icct-antipolocampus.appspot.com",
+            messagingSenderId: "599283704994",
+            appId: "1:599283704994:web:ebe48bb856531b28bf63fb",
+            measurementId: "G-S5NKWMN8DB"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        //Ito yung function for retrieving and creation nung excel file
+        function retrieveAllOrders() {
+
+            const dbRef = ref(db); 
+
+            get(child(dbRef, 'orders'))
+            .then((snapshot) => {
+                if(snapshot.exists()) {
+                    let excelHeaders = ['Username', 'Student No.', 'Campus', 'Phone #', 'E-mail', 'Nstp', '', 'P.E Uniform', '', 'P.E Joggerpants'];
+
+                    let excelRows = [excelHeaders];
+                    const workbook = XLSX.utils.book_new();
+
+                    snapshot.forEach(childSnapshot => {
+                        const orderData = childSnapshot.val();
+                        // console.log("Order Data:", orderData);
+                        excelRows.push([orderData.user.username, orderData.user.studentNumber, orderData.user.campus, orderData.user.cellphone, orderData.user.gmail, `${orderData.NSTP.qty}, ${orderData.NSTP.size}`, '', `${orderData.UniformPE.qty}, ${orderData.UniformPE.size}`, '', `${orderData.Joggerpants.qty}, ${orderData.Joggerpants.size}`]);
+                        
+                    });
+
+                    const worksheet = XLSX.utils.aoa_to_sheet(excelRows);
+                    XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+                    XLSX.writeFile(workbook, "orders.xlsx"); 
+
+                } 
+                else {
+                    console.log("No data available");
+                }
+            }).catch((error) => {
+                console.error("Error retrieving data:", error);
+            });
+        } 
+        //Ito pre yung event listener for download button
+        document.getElementById('downloadBtn').addEventListener('click', (event) => {
+            event.preventDefault();
+            retrieveAllOrders();
+        });
+
+
+    </script>
+</body>
+</html>

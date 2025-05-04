@@ -1,0 +1,31 @@
+body {
+    width: 100%;
+    height: 100svh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#downloadBtn {
+    width: 120px;
+    aspect-ratio: 12/4;
+    outline: none;
+    background: rgb(94, 1, 94);
+    border: none;
+    color: white;
+    font-family: sans-serif;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: .3s ease-in-out;
+}
+#downloadBtn:hover{
+    transition: .3s ease-in-out;
+    background-color: rgb(148, 0, 148);
+}
+#downloadBtn:active{
+    transform: scale(.9);
+    transition: .3s ease-in-out;
+    background-color: rgb(148, 0, 148);
+}
